@@ -1,0 +1,35 @@
+const inputBox = document.getElementById("input-type");
+const listContainer = document.getElementById("list-container");
+const addBtn = document.getElementById("myButton");
+
+function addtask(){
+    if(inputBox.value === ""){
+        alert("Please add task..")
+    }else{
+        let li = document.createElement("li");
+        li.innerHTML = inputBox.value;
+        listContainer.appendChild(li);
+        let span = document.createElement("span");
+        span.innerHTML = "\u00d7"
+        li.appendChild(span);
+    }
+    inputBox.value = "";
+    saveData();
+}
+listContainer.addEventListener("click" , (e) =>  {
+    e.target.tagName === "SPAN";
+    e.target.parentElement.remove();
+    saveData()
+})
+function saveData() {
+  localStorage.setItem("data", listContainer.innerHTML);
+}
+function showTask(){
+    listContainer.innerHTML = localStorage.getItem("data");
+    showTask();
+}
+inputBox.addEventListener("keypress" , (e) =>  {
+    if(e.key === "Enter"){
+     addBtn.click()
+    }
+})
